@@ -1,4 +1,4 @@
-module github.com/Yakiyo/go-template
+module github.com/Yakiyo/scoob
 
 go 1.20
 

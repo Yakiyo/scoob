@@ -3,10 +3,10 @@ package cmd
 import (
 	"os"
 
-	"github.com/Yakiyo/go-template/config"
-	logger "github.com/Yakiyo/go-template/log"
-	"github.com/Yakiyo/go-template/meta"
-	"github.com/Yakiyo/go-template/utils"
+	"github.com/Yakiyo/scoob/config"
+	logger "github.com/Yakiyo/scoob/log"
+	"github.com/Yakiyo/scoob/meta"
+	"github.com/Yakiyo/scoob/utils"
 	"github.com/charmbracelet/log"
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
@@ -15,8 +15,11 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     meta.AppName,
-	Short:   "Shorter description",
-	Long:    `Longer description`,
+	Short:   "Drop-in replacement cli for scoop",
+	Long:    `Scoob is a rewrite of scoop in Go.
+	
+It aims to be a faster alternative to scoop, with the same features.
+For any queries, issues or bug reports, please visit https://github.com/Yakiyo/scoob`,
 	Version: meta.Version,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		config.BindFlags(cmd)
