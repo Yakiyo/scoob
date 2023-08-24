@@ -14,9 +14,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     meta.AppName,
-	Short:   "Drop-in replacement cli for scoop",
-	Long:    `Scoob is a rewrite of scoop in Go.
+	Use:   meta.AppName,
+	Short: "Drop-in replacement cli for scoop",
+	Long: `Scoob is a rewrite of scoop in Go.
 	
 It aims to be a faster alternative to scoop, with the same features.
 For any queries, issues or bug reports, please visit https://github.com/Yakiyo/scoob`,
