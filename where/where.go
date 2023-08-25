@@ -43,3 +43,18 @@ func RootDir() string {
 func Config() string {
 	return filepath.Join(root, meta.AppName+".toml")
 }
+
+// locally installed buckets directory
+func Buckets() string {
+	return filepath.Join(root, "buckets")
+}
+
+// installed apps directory
+func Apps() string {
+	return filepath.Join(root, "apps")
+}
+
+// shims directory
+func Shims() string {
+	return filepath.Join(root, "shims")
+}
