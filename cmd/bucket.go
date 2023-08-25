@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/Yakiyo/scoob/pkg/bucket"
 	"github.com/charmbracelet/log"
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +39,30 @@ scoob bucket add somebucket https://github.com/some/bucket`,
 	},
 }
 
+var bucketList = &cobra.Command{
+	Use:     "list",
+	Short:   "List all locally installed buckets",
+	Example: "scoob bucket list",
+	Args:    cobra.NoArgs,
+	Run: func(cmd *cobra.Command, args []string) {
+		l, err := bucket.ListBucket()
+		if err != nil {
+			log.Error("Unable to read buckets directory", "err", err)
+			os.Exit(1)
+		}
+		if len(l) < 1 {
+			fmt.Println("No buckets installed locally")
+			return
+		}
+		lo.ForEach(l, func(it string, _ int) {
+			fmt.Println(l)
+		})
+
+	},
+}
+
 func init() {
 	bucketCmd.AddCommand(bucketAdd)
+	bucketCmd.AddCommand(bucketList)
 	rootCmd.AddCommand(bucketCmd)
 }
