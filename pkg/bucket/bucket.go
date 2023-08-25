@@ -3,6 +3,7 @@ package bucket
 import (
 	"io/fs"
 	"os"
+	"path/filepath"
 
 	"github.com/Yakiyo/scoob/utils"
 	"github.com/Yakiyo/scoob/where"
@@ -10,7 +11,7 @@ import (
 )
 
 // list all local buckets
-func ListBucket() ([]string, error) {
+func List() ([]string, error) {
 	bucketPath := where.Buckets()
 	if !utils.PathExists(bucketPath) {
 		return []string{}, nil
@@ -25,4 +26,14 @@ func ListBucket() ([]string, error) {
 		}
 		return "", false
 	}), nil
+}
+
+// get the path to a bucket
+func GetPath(name string) string {
+	return filepath.Join(where.Buckets(), name)
+}
+
+// wether a bucket with that name exists
+func Exists(name string) bool {
+	return utils.PathExists(GetPath(name))
 }
