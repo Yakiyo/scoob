@@ -57,12 +57,7 @@ scoob bucket add somebucket https://github.com/some/bucket`,
 		if err != nil {
 			utils.Error("Failed to clone bucket, error running git", "exitCode", code, "err", err)
 		}
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 4, ' ', 0)
-		fmt.Println("Successfully installed bucket")
-		fmt.Fprintln(w, color.BlueString("Name")+"\t"+buckName)
-		fmt.Fprintln(w, color.BlueString("Source")+"\t"+buckUrl)
-		fmt.Fprintln(w, color.BlueString("Path")+"\t"+bucketPath)
-		w.Flush()
+		color.Green("Bucket " + buckName + " has been successfully added")
 	},
 }
 
