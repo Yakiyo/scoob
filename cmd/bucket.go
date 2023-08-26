@@ -80,8 +80,6 @@ var bucketRemove = &cobra.Command{
 	},
 }
 
-// TODO: bucket listing should be made better
-// print bucket name with bucket source (git url)
 var bucketList = &cobra.Command{
 	Use:     "list",
 	Short:   "List all locally installed buckets",
@@ -97,10 +95,13 @@ var bucketList = &cobra.Command{
 			fmt.Println("No buckets installed locally")
 			return
 		}
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 4, ' ', 0)
+		fmt.Fprintln(w, "Name\tLast Modified\tSource")
+		fmt.Fprintln(w, "--------------\t--------------\t--------------")
 		for _, i := range l {
-			fmt.Println(i)
+			fmt.Fprintf(w, "%v\t%v\t%v\n", i.Name, i.LastMod, i.Source)
 		}
-
+		w.Flush()
 	},
 }
 
