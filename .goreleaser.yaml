@@ -36,6 +36,11 @@ snapshot:
 changelog:
   skip: true
 
+release:
+  extra_files:
+    - glob: "./share/scoop/*.json"
+      name_template: "scoob.json"
+
 scoops:
   - folder: share/scoop
     commit_author:
