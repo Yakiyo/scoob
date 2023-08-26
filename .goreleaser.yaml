@@ -11,6 +11,12 @@ builds:
     ldflags:
       - -s -w -X github.com/Yakiyo/scoob/meta.Version={{ .Version }} -X github.com/Yakiyo/scoob/meta.BuiltAt={{ .Date }} -X github.com/Yakiyo/scoob/meta.Revision={{ .ShortCommit }}
 
+    ignore:
+      - goos: "linux"
+        goarch: "arm64"
+      - goos: "linux"
+        goarch: "386"
+
 archives:
   - format: binary
     name_template: >-
