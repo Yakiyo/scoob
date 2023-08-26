@@ -8,6 +8,7 @@ import (
 	logger "github.com/Yakiyo/scoob/log"
 	"github.com/Yakiyo/scoob/meta"
 	"github.com/Yakiyo/scoob/utils"
+	"github.com/Yakiyo/scoob/where"
 	"github.com/charmbracelet/log"
 	"github.com/fatih/color"
 	cc "github.com/ivanpirog/coloredcobra"
@@ -38,7 +39,7 @@ For any queries, issues or bug reports, please visit https://github.com/Yakiyo/s
 
 		logger.SetLevel(viper.GetString("log_level"))
 		utils.SetColor(viper.GetString("color"))
-
+		where.SetRoot(viper.GetString("root_dir"))
 		log.Debug(viper.AllSettings())
 		return nil
 	},
