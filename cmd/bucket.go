@@ -109,9 +109,25 @@ var bucketList = &cobra.Command{
 	},
 }
 
+// list known buckets
+var bucketKnown = &cobra.Command{
+	Use:     "known",
+	Short:   "List all known buckets",
+	Example: "scoob bucket known",
+	Args:    cobra.NoArgs,
+	Run: func(cmd *cobra.Command, args []string) {
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 4, ' ', 0)
+		for k, v := range bucket.KnownBuckets {
+			fmt.Fprintln(w, k+"\t"+v)
+		}
+		w.Flush()
+	},
+}
+
 func init() {
 	bucketCmd.AddCommand(bucketAdd)
 	bucketCmd.AddCommand(bucketRemove)
 	bucketCmd.AddCommand(bucketList)
+	bucketCmd.AddCommand(bucketKnown)
 	rootCmd.AddCommand(bucketCmd)
 }
