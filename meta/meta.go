@@ -5,7 +5,7 @@ var (
 	AppName = "scoob"
 
 	// app version
-	Version = "0.1.0"
+	Version = "Unset"
 
 	// Time when it was built at
 	BuiltAt = "Unset"
