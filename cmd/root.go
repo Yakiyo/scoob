@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/Yakiyo/scoob/config"
@@ -8,6 +9,7 @@ import (
 	"github.com/Yakiyo/scoob/meta"
 	"github.com/Yakiyo/scoob/utils"
 	"github.com/charmbracelet/log"
+	"github.com/fatih/color"
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -50,6 +52,12 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.SetVersionTemplate(func() string {
+		return fmt.Sprintf("Scoob version %v - ", color.BlueString(meta.Version)) +
+			fmt.Sprintf("Released at %v - ", color.BlueString(meta.BuiltAt)) +
+			fmt.Sprintf("(Revision %v)\n", color.BlueString(meta.Revision))
+	}())
+
 	cc.Init(&cc.Config{
 		RootCmd:         rootCmd,
 		Headings:        cc.HiCyan + cc.Bold + cc.Underline,
