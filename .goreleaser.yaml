@@ -1,3 +1,4 @@
+project_name: "scoob"
 before:
   hooks:
     - go mod tidy
@@ -7,7 +8,6 @@ builds:
     goos:
       - linux
       - windows
-      - darwin
     ldflags:
       - -s -w -X github.com/Yakiyo/scoob/meta.Version={{ .Version }} -X github.com/Yakiyo/scoob/meta.BuiltAt={{ .Date }} -X github.com/Yakiyo/scoob/meta.Revision={{ .ShortCommit }}
 
@@ -29,3 +29,17 @@ snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
   skip: true
+
+scoops:
+  - folder: share/scoop
+    commit_author:
+        name: goreleaserbot
+        email: bot@goreleaser.com
+    commit_msg_template: "Update scoop manifest to {{ .ProjectName }} version {{ .Tag }}"
+    homepage: "https://github.com/Yakiyo/scoob"
+    description: "Drop-in replacement cli for scoop"
+    depends: ["git"]
+    repository:
+      owner: "Yakiyo"
+      name: "scoob"
+      branch: "main"
