@@ -1,0 +1,31 @@
+{
+    "version": "0.0.1-dev",
+    "architecture": {
+        "32bit": {
+            "url": "https://github.com/Yakiyo/scoob/releases/download/0.0.1-dev/scoob_Windows_i386.zip",
+            "bin": [
+                "scoob.exe"
+            ],
+            "hash": "ca0812327fb82138b94ecc182af6c498b95d50ab7b398a3e45f8899e26892863"
+        },
+        "64bit": {
+            "url": "https://github.com/Yakiyo/scoob/releases/download/0.0.1-dev/scoob_Windows_x86_64.zip",
+            "bin": [
+                "scoob.exe"
+            ],
+            "hash": "b61be778a5cfbdbc8e530ff2c63347aea4b4f5d4e80c13c6b26e38f2e9113d18"
+        },
+        "arm64": {
+            "url": "https://github.com/Yakiyo/scoob/releases/download/0.0.1-dev/scoob_Windows_arm64.zip",
+            "bin": [
+                "scoob.exe"
+            ],
+            "hash": "59676389decd7b353806c6d9c5b9fe61694f23b561bdcaf2b44ff22555046307"
+        }
+    },
+    "homepage": "https://github.com/Yakiyo/scoob",
+    "description": "Drop-in replacement cli for scoop",
+    "depends": [
+        "git"
+    ]
+}
