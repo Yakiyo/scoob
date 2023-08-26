@@ -21,6 +21,7 @@ func List() ([]BucketDir, error) {
 	if err != nil {
 		return []BucketDir{}, err
 	}
+	// run it parallely for speeding it up
 	return lop.Map(
 		lo.Filter(entries, func(i fs.DirEntry, _ int) bool { return i.IsDir() }),
 		func(f fs.DirEntry, _ int) BucketDir {

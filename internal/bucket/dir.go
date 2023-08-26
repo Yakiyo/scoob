@@ -13,6 +13,7 @@ import (
 // data recovered from a bucket directory
 type BucketDir struct {
 	Name    string
+	Path    string
 	Source  string
 	LastMod time.Time
 }
