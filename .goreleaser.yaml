@@ -38,17 +38,17 @@ changelog:
 
 release:
   extra_files:
-    - glob: "./share/scoop/*.json"
+    - glob: "./pkg/scoop/scoob.json"
       name_template: "scoob.json"
 
 scoops:
-  - folder: share/scoop
-    commit_author:
-        name: goreleaserbot
-        email: bot@goreleaser.com
-    commit_msg_template: "Update scoop manifest to {{ .ProjectName }} version {{ .Tag }}"
+  - folder: "pkg/scoop"
     homepage: "https://github.com/Yakiyo/scoob"
     description: "Drop-in replacement cli for scoop"
+    commit_author:
+        name: "goreleaserbot"
+        email: "bot@goreleaser.com"
+    commit_msg_template: "Update scoop manifest to {{ .ProjectName }} version {{ .Tag }}"
     depends: ["git"]
     repository:
       owner: "Yakiyo"
