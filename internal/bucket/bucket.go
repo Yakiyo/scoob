@@ -21,12 +21,6 @@ func List() ([]BucketDir, error) {
 	if err != nil {
 		return []BucketDir{}, err
 	}
-	// return lo.FilterMap(entries, func(f fs.DirEntry, _ int) (string, bool) {
-	// 	if f.IsDir() {
-	// 		return f.Name(), true
-	// 	}
-	// 	return "", false
-	// }), nil
 	return lop.Map(
 		lo.Filter(entries, func(i fs.DirEntry, _ int) bool { return i.IsDir() }),
 		func(f fs.DirEntry, _ int) BucketDir {

@@ -1,6 +1,10 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+/**
+ * Scoob - a faster drop-in replacement for scoop
+ * written in Go
+ *
+ * Copyright Yakiyo - 2023
+ * Licensed under MIT license
+ */
 package main
 
 import "github.com/Yakiyo/scoob/cmd"
