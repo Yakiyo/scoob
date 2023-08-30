@@ -9,7 +9,7 @@ builds:
       - linux
       - windows
     ldflags:
-      - -s -w -X github.com/Yakiyo/scoob/meta.Version={{ .Version }} -X github.com/Yakiyo/scoob/meta.BuiltAt={{ .Date }} -X github.com/Yakiyo/scoob/meta.Revision={{ .ShortCommit }}
+      - -s -w -X github.com/Yakiyo/scoob/utils/meta.Version={{ .Version }} -X github.com/Yakiyo/scoob/utils/meta.BuiltAt={{ .Date }} -X github.com/Yakiyo/scoob/utils/meta.Revision={{ .ShortCommit }}
 
     ignore:
       - goos: "linux"

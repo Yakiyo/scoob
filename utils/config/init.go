@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/Yakiyo/scoob/meta"
-	"github.com/Yakiyo/scoob/where"
+	"github.com/Yakiyo/scoob/utils/meta"
+	"github.com/Yakiyo/scoob/utils/where"
 	"github.com/charmbracelet/log"
 	v "github.com/spf13/viper"
 )

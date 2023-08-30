@@ -4,7 +4,7 @@ package where
 import (
 	"path/filepath"
 
-	"github.com/Yakiyo/scoob/meta"
+	"github.com/Yakiyo/scoob/utils/meta"
 	"github.com/charmbracelet/log"
 
 	homedir "github.com/mitchellh/go-homedir"

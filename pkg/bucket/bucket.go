@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/Yakiyo/scoob/utils"
-	"github.com/Yakiyo/scoob/where"
+	"github.com/Yakiyo/scoob/utils/where"
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
 )
