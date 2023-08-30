@@ -42,8 +42,7 @@ changelog:
 #       name_template: "scoob.json"
 
 scoops:
-  - folder: "pkg/scoop"
-    homepage: "https://github.com/Yakiyo/scoob"
+  - homepage: "https://github.com/Yakiyo/scoob"
     description: "Drop-in replacement cli for scoop"
     commit_author:
         name: "goreleaserbot"
