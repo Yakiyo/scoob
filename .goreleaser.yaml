@@ -36,10 +36,10 @@ snapshot:
 changelog:
   skip: true
 
-release:
-  extra_files:
-    - glob: "./pkg/scoop/scoob.json"
-      name_template: "scoob.json"
+# release:
+#   extra_files:
+#     - glob: "./pkg/scoop/scoob.json"
+#       name_template: "scoob.json"
 
 scoops:
   - folder: "pkg/scoop"
