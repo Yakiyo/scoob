@@ -2,10 +2,9 @@ package manifest
 
 import (
 	"errors"
-	"fmt"
-	"reflect"
 
 	json "github.com/json-iterator/go"
+	"github.com/samber/lo"
 )
 
 // A struct representing a scoob manifest
@@ -46,35 +45,32 @@ type ArchInfo struct {
 type Bin [][]string
 
 func (b *Bin) UnmarshalJSON(data []byte) error {
-	fmt.Println(string(data))
 	if len(data) < 1 {
 		return errors.New("required key `bin` is empty, must be an array of string arrays or a string")
 	}
-	var v [][]string
+	v := [][]string{}
 	var i interface{}
 	err := json.Unmarshal(data, &i)
 	if err != nil {
 		return err
 	}
-	fmt.Println(reflect.TypeOf(i))
 	switch d := i.(type) {
 	case string:
 		v = [][]string{{d}}
-	case []string:
-		for _, k := range d {
-			v = append(v, []string{k})
+	case []interface{}:
+		for _, inner := range d {
+			switch inner := inner.(type) {
+			case string:
+				v = append(v, []string{inner})
+			case []interface{}:
+				v = append(v, lo.Map(inner, func(item interface{}, _ int) string { return item.(string) }))
+			}
 		}
-	case [][]string:
-		v = d
 	default:
 		return errors.New("invalid value for bin received, must be one of string, []string or [][]string")
 	}
-	if len(v) < 1 {
-		return errors.New("did not received any value for `bin`")
-	}
-	//lint:ignore SA4006 dont care
 	t := Bin(v)
-	b = &t
+	*b = t
 	return nil
 }
 
