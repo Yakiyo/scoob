@@ -9,9 +9,9 @@ import (
 
 // A type that can be either `T` or a slice of `T`. This will be
 // unmarshalled into a slice of `T`
-type TOrSliceT[T any] []T
+type Vectorized[T any] []T
 
-func (t *TOrSliceT[T]) UnmarshalJSON(data []byte) error {
+func (t *Vectorized[T]) UnmarshalJSON(data []byte) error {
 	if len(data) < 1 {
 		return nil
 	}
