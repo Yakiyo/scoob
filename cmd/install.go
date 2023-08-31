@@ -5,7 +5,20 @@ import "github.com/spf13/cobra"
 var installCmd = &cobra.Command{
 	Use: "install",
 	Short: "Install an app",
-	Args: cobra.ExactArgs(1),
+	Long: `Install apps via scoob
+Help: e.g. The usual way to install an app (uses your local 'buckets'):
+    scoob install git
+
+To install a different version of the app
+(note that this will auto-generate the manifest using current version):
+    scoob install gh@2.7.0
+
+To install an app from a manifest at a URL:
+    scoob install https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/runat.json
+
+To install an app from a manifest on your computer
+    scoob install \path\to\app.json`,
+	Args: cobra.ExactArgs(1), // TODO: support installing multiple apps in the future
 	Aliases: []string{"add"},
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
