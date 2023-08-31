@@ -1,9 +1,9 @@
 package manifest
 
 import (
-	"fmt"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	json "github.com/json-iterator/go"
 )
 
@@ -13,7 +13,7 @@ func TestParse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Printf("%#v\n", mf)
+	spew.Dump(mf)
 }
 
 var testManifest = `{

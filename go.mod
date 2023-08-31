@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/charmbracelet/log v0.2.4
+	github.com/davecgh/go-spew v1.1.1
 	github.com/fatih/color v1.15.0
 	github.com/ivanpirog/coloredcobra v1.0.1
 	github.com/json-iterator/go v1.1.12
