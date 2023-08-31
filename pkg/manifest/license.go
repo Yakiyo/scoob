@@ -22,7 +22,7 @@ func (l *License) UnmarshalJSON(data []byte) error {
 	}
 	switch v := v.(type) {
 	case string:
-		*l = License{Url: v}
+		*l = License{Identifier: v}
 	case map[string]interface{}:
 		err := json.Unmarshal(data, l)
 		if err != nil {
