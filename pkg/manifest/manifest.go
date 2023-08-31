@@ -1,5 +1,11 @@
 package manifest
 
+import (
+	"os"
+
+	json "github.com/json-iterator/go"
+)
+
 // A struct representing a scoob manifest
 type Manifest struct {
 	Version        string              `json:"version"`
@@ -25,4 +31,15 @@ type Manifest struct {
 	Bin            Bin                 `json:"bin"`
 	Installer      Installer           `json:"installer"`
 	Uninstaller    Installer           `json:"uninstaller"`
+}
+
+// parse a manifest file
+func Parse(file string) (Manifest, error) {
+	m := Manifest{}
+	b, err := os.ReadFile(file)
+	if err != nil {
+		return m, err
+	}
+	err = json.Unmarshal(b, &m)
+	return m, err
 }
