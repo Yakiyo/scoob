@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 
@@ -38,13 +39,17 @@ To install an app from a manifest on your computer
 		_ = arch
 
 		//lint:ignore SA9003 todo
-		if !lo.Must1(cmd.Flags().GetBool("no-update")) {
+		if !lo.Must1(cmd.Flags().GetBool("no-update-scoop")) {
 			// TODO: update scoop
 		}
-		_, err := parseApp(args[0])
+		app, err := parseApp(args[0])
 		if err != nil {
 			return err
 		}
+		if app.Name == "" {
+			return errors.New("Invalid app name. Did not match app syntax [bucket/]app[@version]")
+		}
+		fmt.Println(app)
 		return nil
 	},
 }
