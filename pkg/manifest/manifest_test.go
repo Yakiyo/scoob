@@ -17,50 +17,74 @@ func TestParse(t *testing.T) {
 }
 
 var testManifest = `{
-	"version": "1.10.14",
-	"description": "Apache Ant is a Java library and command-line tool for compiling, assembling, testing and running Java and non-Java applications.",
-	"homepage": "https://ant.apache.org/",
-	"license": "Apache-2.0",
-	"suggest": {
-		"JDK": "java/openjdk"
-	},
-	"url": "https://www.apache.org/dist/ant/binaries/apache-ant-1.10.14-bin.zip",
-	"hash": "sha512:6e85cf45726ee88c916976aba07488b79da84be1a31b5c5441a65c28bb4436b5a5a373402c78ac6a3827bd261fb924124bb9534e52d6429162eaf57b9737124c",
-	"extract_dir": "apache-ant-1.10.14",
-	"pre_install": [
-		"# Record built-in libs in builtin_libs.json",
-		"$builtin_libs = Get-ChildItem \"$dir\\lib\" | Select -ExpandProperty Name",
-		"$builtin_libs | ConvertTo-Json | Out-File \"$dir\\lib\\builtin_libs.json\" -Encoding Ascii",
-		"# Copy user libs to $dir",
-		"if (Test-Path \"$persist_dir\\lib\") {",
-		"    Get-ChildItem \"$persist_dir\\lib\" | Select -ExpandProperty Name | ForEach-Object {",
-		"        if (!(Test-Path \"$dir\\lib\\$_\")) { Copy-Item \"$persist_dir\\lib\\$_\" \"$dir\\lib\" }",
-		"    }",
-		"}"
-	],
-	"env_add_path": "bin",
-	"env_set": {
-		"ANT_HOME": "$dir"
-	},
-	"uninstaller": {
-		"script": [
-			"# Only persist libs that were added by the user, but not built-in ones",
-			"ensure \"$persist_dir\\lib\" | Out-Null",
-			"$builtin_libs = Get-Content \"$dir\\lib\\builtin_libs.json\" | ConvertFrom-Json",
-			"Get-ChildItem \"$dir\\lib\" -Exclude builtin_libs.json | Select -ExpandProperty Name | ForEach-Object {",
-			"    if (!($builtin_libs -contains \"$_\")) { Copy-Item \"$dir\\lib\\$_\" \"$persist_dir\\lib\" }",
-			"}"
-		]
-	},
-	"checkver": {
-		"url": "https://ant.apache.org/bindownload.cgi",
-		"regex": "Currently, Apache Ant (?:[\\d.]+ and )?([\\d.]+) (?:is|are) the best"
-	},
-	"autoupdate": {
-		"url": "https://www.apache.org/dist/ant/binaries/apache-ant-$version-bin.zip",
-		"hash": {
-			"url": "$url.sha512"
-		},
-		"extract_dir": "apache-ant-$version"
-	}
+    "version": "23.01",
+    "description": "A multi-format file archiver with high compression ratios",
+    "homepage": "https://www.7-zip.org/",
+    "license": "LGPL-2.1-or-later",
+    "notes": "Add 7-Zip as a context menu option by running: \"$dir\\install-context.reg\"",
+    "architecture": {
+        "64bit": {
+            "url": "https://www.7-zip.org/a/7z2301-x64.msi",
+            "hash": "0ba639b6dacdf573d847c911bd147c6384381a54dac082b1e8c77bc73d58958b",
+            "extract_dir": "Files\\7-Zip"
+        },
+        "32bit": {
+            "url": "https://www.7-zip.org/a/7z2301.msi",
+            "hash": "b32e47f88d03dc29b5cb02c6ed07a7e48015f655346b62a3b32033c49ed9bb06",
+            "extract_dir": "Files\\7-Zip"
+        },
+        "arm64": {
+            "url": "https://www.7-zip.org/a/7z2301-arm64.exe",
+            "hash": "6fa4cb35cbebb0a46b8bbc22d1686a340e183c1f875d8b714efdc39af93debda",
+            "pre_install": [
+                "$7zr = Join-Path $env:TMP '7zr.exe'",
+                "Invoke-WebRequest https://www.7-zip.org/a/7zr.exe -OutFile $7zr",
+                "Invoke-ExternalCommand $7zr @('x', \"$dir\\$fname\", \"-o$dir\", '-y') | Out-Null",
+                "Remove-Item \"$dir\\Uninstall.exe\", \"$dir\\*-arm64.exe\", $7zr"
+            ]
+        }
+    },
+    "post_install": [
+        "$7zip_root = \"$dir\".Replace('\\', '\\\\')",
+        "'install-context.reg', 'uninstall-context.reg' | ForEach-Object {",
+        "    $content = Get-Content \"$bucketsdir\\main\\scripts\\7-zip\\$_\"",
+        "    $content = $content.Replace('$7zip_root', $7zip_root)",
+        "    if ($global) {",
+        "       $content = $content.Replace('HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE')",
+        "    }",
+        "    Set-Content \"$dir\\$_\" $content -Encoding Ascii",
+        "}"
+    ],
+    "bin": [
+        "7z.exe",
+        "7zFM.exe",
+        "7zG.exe"
+    ],
+    "shortcuts": [
+        [
+            "7zFM.exe",
+            "7-Zip"
+        ]
+    ],
+    "persist": [
+        "Codecs",
+        "Formats"
+    ],
+    "checkver": {
+        "url": "https://www.7-zip.org/download.html",
+        "regex": "Download 7-Zip ([\\d.]+) \\(\\d{4}-\\d{2}-\\d{2}\\)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://www.7-zip.org/a/7z$cleanVersion-x64.msi"
+            },
+            "32bit": {
+                "url": "https://www.7-zip.org/a/7z$cleanVersion.msi"
+            },
+            "arm64": {
+                "url": "https://www.7-zip.org/a/7z$cleanVersion-arm64.exe"
+            }
+        }
+    }
 }`
