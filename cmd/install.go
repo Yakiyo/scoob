@@ -3,9 +3,11 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"regexp"
 
+	"github.com/Yakiyo/scoob/pkg/app"
+	"github.com/Yakiyo/scoob/pkg/bucket"
 	"github.com/Yakiyo/scoob/utils"
+	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
@@ -42,14 +44,44 @@ To install an app from a manifest on your computer
 		if !lo.Must1(cmd.Flags().GetBool("no-update-scoop")) {
 			// TODO: update scoop
 		}
-		app, err := parseApp(args[0])
+		app, err := app.ParseApp(args[0])
 		if err != nil {
 			return err
 		}
 		if app.Name == "" {
 			return errors.New("Invalid app name. Did not match app syntax [bucket/]app[@version]")
 		}
-		fmt.Println(app)
+		buckets := []string{}
+		// if a specific bucket was given, use it
+		if app.Bucket != "" {
+			p := bucket.GetPath(app.Bucket)
+			if !utils.PathExists(p) {
+				return fmt.Errorf("No bucket with name %v installed locally", app.Bucket)
+			}
+			buckets = append(buckets, p)
+		} else {
+			bdirs, err := bucket.List()
+			if err != nil {
+				return err
+			}
+			buckets = append(buckets, lo.Map[bucket.BucketDir, string](bdirs, func(item bucket.BucketDir, _ int) string {
+				return item.Path
+			})...)
+		}
+		var manifests []bucket.ManifestFile
+		for _, buck := range buckets {
+			manifests = bucket.Walk(buck)
+		}
+		manifest, found := lo.Find(manifests, func(i bucket.ManifestFile) bool { return i.Name == app.Name })
+		if !found {
+			return fmt.Errorf("Unable to find manifest with name %v in local buckets", app.Name)
+		}
+		log.Info("Found manifest", "name", manifest.Name, "file", manifest.Path)
+		fmt.Println(manifest)
+		if app.Version != "" {
+			log.Warn("Handling non-latest version is not implemented yet. Installing latest version")
+		}
+
 		return nil
 	},
 }
@@ -63,26 +95,4 @@ func init() {
 	f.BoolP("skip", "s", false, "Skip hash validation (use with caution!)")
 	f.StringP("arch", "a", "", "Use the specified architecture, if the app supports it (32bit|64bit|arm64)")
 	rootCmd.AddCommand(installCmd)
-}
-
-// regular expression to match an app argument
-var appRgx = regexp.MustCompile(`^(?:(?P<bucket>[a-zA-Z0-9-_.]+)/)?(?P<app>.*\.json$|[a-zA-Z0-9-_.]+)(?:@(?P<version>.*))?$`)
-
-// parse an app argument
-func parseApp(app string) (parsedApp, error) {
-	matches := appRgx.FindStringSubmatch(app)
-	p := parsedApp{}
-	if matches == nil || len(matches) <= 1 {
-		return p, fmt.Errorf("Arg %v did not match valid app name syntax, must match `bucket/name@version` format", app)
-	}
-	p.Name = matches[2]
-	p.Bucket = matches[1]
-	p.Version = matches[3]
-	return p, nil
-}
-
-type parsedApp struct {
-	Name    string
-	Bucket  string
-	Version string
 }
