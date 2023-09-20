@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"text/tabwriter"
 
-	"github.com/Yakiyo/scoob/pkg/bucket"
+	"github.com/Yakiyo/scoob/bucket"
 	"github.com/Yakiyo/scoob/utils"
 	"github.com/charmbracelet/log"
 	"github.com/fatih/color"

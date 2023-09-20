@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Yakiyo/scoob/pkg/app"
-	"github.com/Yakiyo/scoob/pkg/bucket"
+	"github.com/Yakiyo/scoob/app"
+	"github.com/Yakiyo/scoob/bucket"
 	"github.com/Yakiyo/scoob/utils"
 	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
