@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var installCmd = &cobra.Command{
@@ -36,7 +37,7 @@ To install an app from a manifest on your computer
 		if fv := lo.Must1(cmd.Flags().GetString("arch")); fv != "" {
 			arch = fv
 		} else {
-			arch = lo.Must1(utils.GetDefaultArch())
+			arch = viper.GetString("default_architecture")
 		}
 		_ = arch
 
