@@ -81,6 +81,7 @@ To install an app from a manifest on your computer
 		fmt.Println(manifest)
 		if app.Version != "" {
 			log.Warn("Handling non-latest version is not implemented yet. Installing latest version")
+			//TODO: implement generating manifest here
 		}
 
 		return nil
