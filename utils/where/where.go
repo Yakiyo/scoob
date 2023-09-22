@@ -58,3 +58,7 @@ func Apps() string {
 func Shims() string {
 	return filepath.Join(root, "shims")
 }
+
+func Cache() string {
+	return filepath.Join(root, "cache")
+}
